@@ -1,0 +1,58 @@
+GOLDEN IRIS - GOLDENEYE 007 NATIVO EN PSP - VERSION 1.1
+por fveralv - https://github.com/FJVERALV/Goldeniris007-psp
+====================================================
+
+Este paquete NO incluye el juego. Necesitas tu propia ROM de
+GoldenEye 007 (USA) en formato .z64
+(SHA-1 abe01e4aeb033b6c0836819f549c791b26cfde83).
+
+Requisitos
+----------
+- PSP-2000 o superior (modelos de 64 MB) con firmware personalizado.
+  La PSP-1000 no tiene memoria suficiente.
+
+Instalacion
+-----------
+1. Copia tu ROM .z64 dentro de PSP\GAME\GOLDENIRIS\data (el nombre da igual).
+2. Copia la carpeta PSP\GAME\GOLDENIRIS completa a PSP/GAME/ de la Memory Stick.
+3. Arranca "Golden Iris" desde el menu Juego de la PSP.
+
+La primera vez el juego comprueba la ROM y prepara a partir de ella los
+modelos y escenarios para la PSP (unos segundos, con el progreso en
+pantalla). Los guarda en data y no lo vuelve a hacer. No hace falta PC,
+Python ni ningun script.
+
+Controles
+---------
+Stick ............. andar y desplazarse (esquema PSP)
+Triangulo / X ..... mirar arriba / abajo
+Cuadrado / Circulo  girar
+R ................. disparar
+L (mantener) ...... apuntar
+Cruceta abajo/arr.  accion / recargar
+Cruceta der./izq. . arma siguiente / anterior
+START ............. reloj (pausa)
+SELECT ............ menu de opciones
+
+Novedades de la 1.1
+-------------------
+- La GPU de la PSP dibuja los escenarios y la mayor parte de los enemigos
+  y objetos: se preparan una sola vez y la GPU los coloca en cada
+  fotograma. Va bastante mas rapido que la 1.0.
+- El juego prepara sus datos desde la ROM en el primer arranque.
+- Menu de pausa con controles reasignables y trucos.
+
+Estado
+------
+Version temprana. En una PSP real todavia baja de fotogramas en las zonas
+con muchos enemigos; se sigue optimizando. El juego escribe ge007.log en su
+carpeta: si encuentras un fallo, adjuntalo en una incidencia del
+repositorio.
+
+Menu de pausa (SELECT): opciones de controles (tambien cambiar cada accion
+de boton), video, audio y juego, y una seccion Cheats con todos los trucos
+del juego (uno a uno, o todos a la vez).
+
+Proyecto de aficionados sin afiliacion. GoldenEye 007 es marca de sus
+respectivos propietarios. Basado en goldeneye-pc-port (jkdansereau);
+licencias en LICENSE y NOTICE.

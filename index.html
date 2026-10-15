@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golden Iris PSP</title>
+<meta name="description" content="Golden Iris: port nativo para PSP que ejecuta GoldenEye 007 (Nintendo 64) a partir de tu propia ROM, por fveralv. Version 1.1.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#040405;
+    --piano:#0b0b0d;
+    --gloss:rgba(255,255,255,.06);
+    --gold:#d8b25a;
+    --gold-hi:#f6e3a1;
+    --gold-dim:#8a6e2f;
+    --chrome:#9aa0a8;
+    --text:#e9e6df;
+    --muted:#9a968d;
+    --red:#c8102e;
+    --ok:#3ec28f; --warn-c:#ff6b6b; --todo:#7ca7ff; --study:#e37fd2;
+    --tri:#3ec28f; --cir:#ff6b6b; --crs:#7ca7ff; --sqr:#e37fd2;
+    --title:"Cinzel",Georgia,serif;
+    --font:"Rajdhani","Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--bg)}
+  body{
+    margin:0;color:var(--text);font-family:var(--font);font-size:19px;line-height:1.45;min-height:100vh;
+    overflow-x:hidden;
+    background:
+      radial-gradient(1200px 520px at 50% -180px,rgba(255,255,255,.09),transparent 70%),
+      radial-gradient(900px 600px at 110% 40%,rgba(216,178,90,.06),transparent 70%),
+      linear-gradient(180deg,#0d0d10 0,#040405 420px,#040405 100%);
+  }
+  main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:46px 18px 70px}
+  .plat{color:var(--muted);letter-spacing:4px;font-size:15px;text-transform:uppercase}
+  h1{font-family:var(--title);font-weight:800;margin:6px 0 0;line-height:.95;letter-spacing:2px;
+    font-size:clamp(48px,11vw,104px);
+    background:linear-gradient(180deg,var(--gold-hi) 0,var(--gold) 45%,#7a5a1e 52%,var(--gold) 64%,var(--gold-hi) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 0 rgba(0,0,0,.6)) drop-shadow(0 0 18px rgba(216,178,90,.18))}
+  h1 .zz{font-size:.62em;letter-spacing:4px}
+  .sub{font-family:var(--title);font-size:clamp(20px,3.6vw,30px);letter-spacing:6px;margin-top:10px;color:var(--text)}
+  .by{color:var(--muted);margin-top:6px}
+  .by b{color:var(--gold)}
+  .psp-btns{display:flex;gap:10px;margin:22px 0 4px}
+  .pb{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;
+    background:radial-gradient(circle at 35% 30%,#2a2a2e,#0a0a0b 70%);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 2px 6px rgba(0,0,0,.7);
+    border:1px solid #1d1d20}
+  .pb.t{color:var(--tri)}.pb.c{color:var(--cir)}.pb.x{color:var(--crs)}.pb.s{color:var(--sqr)}
+
+  h2{font-family:var(--title);font-weight:600;font-size:clamp(22px,4vw,30px);letter-spacing:4px;margin:54px 0 16px;color:var(--gold-hi);
+    display:flex;align-items:center;gap:14px}
+  h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold-dim),transparent)}
+  h2 .g{font-size:.8em}
+
+  .card{position:relative;border-radius:14px;padding:20px 22px;margin:14px 0;
+    background:linear-gradient(180deg,#141417 0,#0a0a0c 55%,#070708 100%);
+    border:1px solid #232327;box-shadow:inset 0 1px 0 var(--gloss),0 10px 30px rgba(0,0,0,.55)}
+  .card::before{content:"";position:absolute;left:0;right:0;top:0;height:46%;border-radius:14px 14px 40% 40%/14px 14px 18px 18px;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),transparent);pointer-events:none}
+  .card.gold{border-color:var(--gold-dim)}
+  .card.warn{border-color:#5a1420}
+  .label{color:var(--gold);letter-spacing:3px;font-size:14px;font-weight:700;text-transform:uppercase}
+  .warn .label{color:var(--warn-c)}
+  .big{font-family:var(--title);font-size:52px;line-height:1;color:var(--gold-hi);margin:6px 0 4px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+  .grid .card{margin:0}
+  .muted{color:var(--muted)}
+  p{margin:.45em 0}
+  a{color:var(--gold-hi)}
+  b{color:#fff}
+
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+  .shot{margin:0;padding:14px 16px 12px;border-radius:26px;background:linear-gradient(180deg,#1a1a1d,#060607);
+    border:1px solid #26262a;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 12px 26px rgba(0,0,0,.6)}
+  .shot img{display:block;width:100%;height:auto;aspect-ratio:480/272;border-radius:4px;background:#000;
+    image-rendering:auto;box-shadow:0 0 0 2px #000}
+  .shot figcaption{color:var(--muted);font-size:15px;text-align:center;margin-top:8px;letter-spacing:1px}
+  .shot.empty img{visibility:hidden}
+
+  ul.feat{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px 22px}
+  ul.feat li{padding-left:26px;position:relative}
+  ul.feat li::before{content:"";position:absolute;left:4px;top:.55em;width:9px;height:9px;border-radius:50%;
+    background:radial-gradient(circle,var(--gold-hi),var(--gold-dim));box-shadow:0 0 8px rgba(216,178,90,.5)}
+
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #1d1d21;vertical-align:top}
+  th{color:var(--gold);font-weight:700;letter-spacing:2px;font-size:14px;text-transform:uppercase}
+  td.k{white-space:nowrap;font-weight:700}
+  .st{white-space:nowrap;font-weight:700;letter-spacing:1px;font-size:15px}
+  .ok{color:var(--ok)}.wip{color:#f2b544}.todo{color:var(--todo)}.study{color:var(--study)}
+
+  .btn{display:inline-block;text-decoration:none;font-family:var(--title);font-weight:600;letter-spacing:3px;font-size:19px;
+    padding:12px 26px;margin:6px 10px 6px 0;border-radius:999px;color:#1a1306;
+    background:linear-gradient(180deg,var(--gold-hi),var(--gold) 55%,#9b7a33);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 16px rgba(0,0,0,.6)}
+  .btn.alt{color:var(--gold-hi);background:linear-gradient(180deg,#1c1c20,#0a0a0b);border:1px solid var(--gold-dim)}
+  .btn:hover{filter:brightness(1.12)}
+  ol{padding-left:1.4em;margin:.4em 0}
+  li{margin:.3em 0}
+  code{color:var(--gold-hi);font-size:.92em;word-break:break-all}
+  footer{margin-top:60px;color:#6d6a63;font-size:15px;text-align:center;letter-spacing:1px;line-height:1.6}
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  html:not(.js) .reveal{opacity:1;transform:none}
+  @media (max-width:560px){body{font-size:17px}.card{padding:16px}td.k{white-space:normal}}
+</style>
+</head>
+<body>
+<main>
+  <header class="reveal">
+    <div class="plat">Nintendo 64 &rarr; PSP &middot; Rare &middot; 1997</div>
+    <h1>GOLDEN <span class="zz">IRIS</span></h1>
+    <div class="sub">GOLDENEYE 007 NATIVO EN PSP</div>
+    <p class="by">Proyecto no oficial de aficionados por <b>fveralv</b>. El codigo del juego compilado para la PSP, sin emulacion de N64.</p>
+    <div class="psp-btns" aria-hidden="true"><span class="pb t">&#9651;</span><span class="pb c">&#9675;</span><span class="pb x">&#10005;</span><span class="pb s">&#9633;</span></div>
+  </header>
+
+  <h2 class="reveal">ESTADO DE LA MISION</h2>
+  <div class="grid reveal">
+    <div class="card gold"><div class="label">Version</div><div class="big">1.1</div><div class="muted">escenarios y enemigos dibujados por la GPU</div></div>
+    <div class="card gold"><div class="label">Consola</div><div class="big">PSP</div><div class="muted">PSP-2000 o superior (64 MB)</div></div>
+    <div class="card gold"><div class="label">Juego</div><div class="big">ROM</div><div class="muted">tu copia de GoldenEye 007 (USA)</div></div>
+  </div>
+
+  <div class="card warn reveal">
+    <div class="label">&#9888; Aviso</div>
+    <p>Es una version temprana. La 1.1 hace que la GPU de la PSP dibuje los escenarios y la mayor parte de los enemigos y objetos, y va bastante mas rapida que la 1.0, pero en una <b>PSP real todavia baja de fotogramas en las zonas con muchos enemigos</b>. La optimizacion sigue siendo el trabajo principal.</p>
+  </div>
+
+  <h2 class="reveal">CAPTURAS</h2>
+  <div class="shots reveal">
+    <figure class="shot"><img src="capturas/captura1.png" alt="Archives: el interrogatorio" loading="lazy" width="480" height="272" onerror="this.parentNode.classList.add('empty')"><figcaption>Archives</figcaption></figure>
+    <figure class="shot"><img src="capturas/captura2.png" alt="Egypt: el templo" loading="lazy" width="480" height="272" onerror="this.parentNode.classList.add('empty')"><figcaption>Egypt</figcaption></figure>
+    <figure class="shot"><img src="capturas/captura3.png" alt="Surface: la base nevada" loading="lazy" width="480" height="272" onerror="this.parentNode.classList.add('empty')"><figcaption>Surface</figcaption></figure>
+    <figure class="shot"><img src="capturas/captura4.png" alt="Streets: las calles de San Petersburgo" loading="lazy" width="480" height="272" onerror="this.parentNode.classList.add('empty')"><figcaption>Streets</figcaption></figure>
+    <figure class="shot"><img src="capturas/captura5.png" alt="Frigate: la cubierta de la fragata" loading="lazy" width="480" height="272" onerror="this.parentNode.classList.add('empty')"><figcaption>Frigate</figcaption></figure>
+    <figure class="shot"><img src="capturas/captura6.png" alt="Dam: la presa" loading="lazy" width="480" height="272" onerror="this.parentNode.classList.add('empty')"><figcaption>Dam</figcaption></figure>
+  </div>
+  <p class="muted reveal" style="font-size:15px;margin-top:10px">Capturas a la resolucion de la PSP (480&times;272).</p>
+
+  <h2 class="reveal">FUNCIONES</h2>
+  <div class="card reveal">
+    <ul class="feat">
+      <li>Ejecucion <b>nativa</b>: el codigo del juego compilado para el procesador de la PSP.</li>
+      <li><b>Todas las misiones</b>, menus, informes y secuencias del juego original.</li>
+      <li><b>Controles de PSP</b> con dos esquemas: estilo PSP (stick para andar, botones para mirar) o estilo N64.</li>
+      <li><b>Menu de pausa</b> con SELECT: video, audio, controles reasignables, trucos y partida.</li>
+      <li>Imagen a la resolucion nativa de la PSP (480&times;272).</li>
+      <li><b>La GPU de la PSP dibuja los escenarios y los modelos</b>: se preparan una sola vez y la GPU los coloca en cada fotograma, en lugar de hacerlo el procesador.</li>
+      <li>Sonido mezclado en el <b>Media Engine</b>, el segundo procesador de la PSP.</li>
+      <li>El juego prepara sus datos a partir de <b>tu propia ROM</b> la primera vez que arranca: nada del juego se distribuye.</li>
+    </ul>
+  </div>
+
+  <h2 class="reveal">CONTROLES</h2>
+  <div class="card reveal">
+    <table>
+      <thead><tr><th>Boton</th><th>Accion (esquema PSP)</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Stick</td><td>Andar y desplazarse de lado</td></tr>
+        <tr><td class="k"><span style="color:var(--tri)">&#9651;</span> / <span style="color:var(--crs)">&#10005;</span></td><td>Mirar arriba / abajo</td></tr>
+        <tr><td class="k"><span style="color:var(--sqr)">&#9633;</span> / <span style="color:var(--cir)">&#9675;</span></td><td>Girar</td></tr>
+        <tr><td class="k">R</td><td>Disparar</td></tr>
+        <tr><td class="k">L</td><td>Apuntar (mantener)</td></tr>
+        <tr><td class="k">Cruceta</td><td>Accion y recargar (abajo/arriba), cambiar de arma (derecha/izquierda)</td></tr>
+        <tr><td class="k">START</td><td>Reloj (pausa)</td></tr>
+        <tr><td class="k">SELECT</td><td>Menu de opciones</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="reveal">INFORME DE MISION</h2>
+  <div class="card reveal">
+    <table>
+      <thead><tr><th>Objetivo</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr><td>Compilacion nativa para PSP</td><td class="st ok">[ COMPLETO ]</td></tr>
+        <tr><td>Todas las misiones cargan y se dibujan</td><td class="st ok">[ COMPLETO ]</td></tr>
+        <tr><td>Arranque en PSP real</td><td class="st ok">[ COMPLETO ]</td></tr>
+        <tr><td>Controles de PSP y menu de opciones</td><td class="st ok">[ COMPLETO ]</td></tr>
+        <tr><td>Trucos del juego y botones configurables en el menu de pausa</td><td class="st ok">[ COMPLETO ]</td></tr>
+        <tr><td>Sonidos correctos y graficos sin huecos en PSP real</td><td class="st ok">[ COMPLETO ]</td></tr>
+        <tr><td>Escenarios y modelos dibujados por la GPU de la PSP</td><td class="st ok">[ COMPLETO ]</td></tr>
+        <tr><td>Rendimiento en PSP real (todavia baja con muchos enemigos)</td><td class="st wip">[ EN CURSO ]</td></tr>
+        <tr><td>El juego prepara sus datos desde la ROM la primera vez, sin PC ni Python</td><td class="st wip">[ EN PRUEBAS ]</td></tr>
+        <tr><td>Traduccion al espa&ntilde;ol, ampliable a otros idiomas</td><td class="st todo">[ PROXIMAMENTE ]</td></tr>
+        <tr><td>Multijugador por Wi-Fi o por IP</td><td class="st study">[ EN ESTUDIO ]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="reveal">PROXIMOS PASOS</h2>
+  <div class="grid reveal">
+    <div class="card"><div class="label">1 &middot; Optimizacion</div><p>Que todo el juego vaya fluido en una PSP real, tambien con muchos enemigos en pantalla: llevar a la GPU las piezas que aun prepara el procesador y aligerar el trabajo que queda en cada fotograma.</p></div>
+    <div class="card"><div class="label">2 &middot; Traduccion</div><p>Menus y textos del juego en espa&ntilde;ol, cargados desde ficheros externos para que cualquiera pueda a&ntilde;adir otros idiomas.</p></div>
+    <div class="card"><div class="label">3 &middot; Multijugador</div><p>Hasta 4 jugadores, cada uno en su PSP y a pantalla completa (sin pantalla partida), con los modos del original. Primero por Wi-Fi entre PSP (ad hoc) y, si es viable, por IP: una PSP hace de anfitriona. Por Internet el router del anfitrion puede necesitar abrir un puerto.</p></div>
+  </div>
+
+  <h2 class="reveal">DESCARGA</h2>
+  <div class="card gold reveal">
+    <a class="btn" id="dl" href="https://github.com/FJVERALV/Goldeniris007-psp/releases/latest">&#9658; DESCARGAR</a>
+    <a class="btn alt" id="repo" href="https://github.com/FJVERALV/Goldeniris007-psp">&#9658; REPOSITORIO</a>
+    <p class="muted">El paquete contiene el juego compilado para PSP. <b>No incluye la ROM</b>: necesitas tu propia copia de GoldenEye 007 (USA).</p>
+    <p class="muted">-</p>
+    <p class="muted">&iquest;Te gusta lo que hago? Si crees que mi trabajo merece la pena, puedes apoyarme invitandome a un cafe. &iexcl;Cualquier aporte me ayuda a seguir creando! &#9749;</p>
+    <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'S6P527KUBF');kofiwidget2.draw();</script>
+  </div>
+
+  <h2 class="reveal">COMO INSTALARLO</h2>
+  <div class="card reveal">
+    <ol>
+      <li>Descomprime el paquete.</li>
+      <li>Copia tu ROM <code>.z64</code> dentro de <code>PSP/GAME/GOLDENIRIS/data/</code> (el nombre da igual).</li>
+      <li>Copia la carpeta <code>PSP/GAME/GOLDENIRIS</code> a la Memory Stick y arranca el juego. La primera vez comprueba la ROM y prepara los modelos y escenarios en el formato de la PSP, con el progreso en pantalla; despues ya no. Sin PC, Python ni scripts.</li>
+    </ol>
+    <p class="muted">Requisitos: PSP-2000 o superior con firmware personalizado, y la ROM <b>GoldenEye 007 (USA)</b> en formato <code>.z64</code>, SHA-1 <code>abe01e4aeb033b6c0836819f549c791b26cfde83</code>.</p>
+  </div>
+
+  <h2 class="reveal">AGRADECIMIENTOS</h2>
+  <div class="card reveal">
+    <p><a href="https://github.com/jkdansereau/goldeneye-pc-port"><b>goldeneye-pc-port</b></a> de jkdansereau y sus colaboradores: el port nativo de PC en el que se basa este proyecto.</p>
+    <p><a href="https://github.com/z2442/oot-PSP"><b>oot-PSP</b></a> de z2442: el port de Ocarina of Time a PSP que sirvio de referencia de diseno.</p>
+    <p class="muted">Y a la decompilacion <a href="https://github.com/n64decomp/007">n64decomp/007</a>, a <a href="https://github.com/pspdev/pspdev">pspdev</a> y a <a href="https://www.ppsspp.org">PPSSPP</a>.</p>
+  </div>
+
+  <footer>
+    GOLDEN IRIS ES UN PROYECTO DE AFICIONADOS SIN AFILIACION NI APOYO DE NINTENDO, RARE, MGM NI DANJAQ.<br>
+    GOLDENEYE 007 Y JAMES BOND SON MARCAS DE SUS RESPECTIVOS PROPIETARIOS (NINTENDO, RARE, DANJAQ LLC Y
+    METRO-GOLDWYN-MAYER); EL NOMBRE SOLO SE CITA PARA INDICAR QUE JUEGO HACE FALTA.<br>
+    NO SE DISTRIBUYE NINGUNA COPIA DEL JUEGO.
+  </footer>
+</main>
+
+<script>
+(function(){
+  document.documentElement.className += " js";
+  // Repository links derived from the GitHub Pages URL (user.github.io/repo)
+  var m = location.hostname.match(/^([^.]+)\.github\.io$/);
+  var repoPath = location.pathname.split("/").filter(Boolean)[0];
+  if (m && repoPath) {
+    var repoUrl = "https://github.com/" + m[1] + "/" + repoPath;
+    document.getElementById("repo").href = repoUrl;
+    document.getElementById("dl").href = repoUrl + "/releases/latest";
+  }
+  // Reveal on scroll
+  var els = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }); }, {threshold:.12});
+    els.forEach(function(el){ io.observe(el); });
+  } else { els.forEach(function(el){ el.classList.add("in"); }); }
+})();
+</script>
+</body>
+</html>
