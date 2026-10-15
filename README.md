@@ -205,13 +205,6 @@ recorte; el backend los dibuja con `sceGu`:
   u 8888), rellenadas hasta potencia de dos y en el orden "swizzled" que la
   GE lee cinco veces más rápido.
 
-### Controles y menú
-
-- `port/psp/psp_input.c` lee el mando con `sceCtrl` y produce botones de N64;
-  `port/src/input.c` le cede el control en PSP.
-- El menú de opciones del port de PC (`port/src/optionsoverlay.c`) se abre con
-  SELECT, con páginas, textos de ayuda y botones propios de PSP.
-
 ### Fallos encontrados por el camino
 
 - **Cuelgue tras el logo de Rare en PSP real:** el conversor de modelos, en
@@ -272,55 +265,6 @@ recorte; el backend los dibuja con `sceGu`:
   arranque, menús y los 21 niveles.
 - **PSP real:** arranque, menús y misiones; rendimiento medido con el
   perfilador integrado.
-
-## Compilar
-
-Todo el build se hace en Linux (o WSL2 en Windows) con Ubuntu 24.04.
-
-**Datos del juego**: los crea el propio juego desde la ROM en el primer
-arranque (`port/psp/romextract.c`). Los conversores de Python de `tools_pc/`
-(`d43_emit.py`, `d69_emit.py`, `d88_emit.py` con `GE_PTR_BYTES=4`) siguen
-siendo la referencia: `romextract.c` compilado para el PC con `-DRX_MAIN` da
-exactamente los mismos ficheros, byte a byte.
-
-**EBOOT de PSP** (requiere [pspdev](https://github.com/pspdev/pspdev) en
-`/usr/local/pspdev`):
-
-```sh
-psp/build-psp.sh            # genera build-psp/EBOOT.PBP
-```
-
-**Archivos de depuración** junto al `EBOOT.PBP`:
-
-- `args.txt`: argumentos, por ejemplo `-level_09` para entrar en Bunker 1.
-- `psp_dump.txt`: números de fotograma que se guardan como `shot_NNNNNN.ppm`.
-- `psp_input.txt`: pulsaciones guionizadas
-  (`<sondeo inicial> <sondeo final> <BOTONES> [lx ly]`, 60 sondeos por segundo).
-- El juego escribe siempre `ge007.log`.
-
-## Estructura
-
-```
-port/psp/            Capa específica de PSP
-  psp_main.c         Módulo, salida con HOME, args.txt, FPU
-  psp_mem.c          Bloques de memoria en dirección fija
-  gfx_psp.cpp        Backend de fast3d sobre sceGu
-  psp_input.c        Mando de PSP -> mando de N64, reasignación de botones
-  psp_menu.c         Menú de pausa (SELECT)
-  psp_cheats.c       Página de trucos del menú
-  romextract.c       Crea los datos del juego desde la ROM (primer arranque)
-  mixer_*.c          Audio en el Media Engine
-  psp_prof.c         Perfilador integrado
-port/fast3d/         RSP por software de fast3d, con el camino propio de PSP
-                     y la caché de geometría (gfx_pc.cpp)
-port/include/portaddr.h   Mapa de direcciones (PC y PSP)
-tools_pc/            Conversores de referencia en Python
-psp/                 Compilar e iconos del XMB
-index.html, capturas/     Página del proyecto (GitHub Pages)
-```
-
-Los cambios en código compartido llevan el comentario `PSP-PORT` para
-localizarlos al traer mejoras del proyecto original.
 
 ## Licencia
 
