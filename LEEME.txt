@@ -1,4 +1,4 @@
-GOLDEN IRIS - GOLDENEYE 007 NATIVO EN PSP - VERSION 1.1
+GOLDEN IRIS - GOLDENEYE 007 NATIVO EN PSP - VERSION 1.2
 por fveralv - https://github.com/FJVERALV/Goldeniris007-psp
 ====================================================
 
@@ -33,6 +33,15 @@ Cruceta abajo/arr.  accion / recargar
 Cruceta der./izq. . arma siguiente / anterior
 START ............. reloj (pausa)
 SELECT ............ menu de opciones
+
+Novedades de la 1.2
+-------------------
+- Los guardias tambien los dibuja la GPU: mas fotogramas en las zonas con
+  enemigos.
+- Corregido: paredes y suelos que temblaban al girar la camara, formas
+  sueltas que aparecian por los bordes (paredes rojas en Jungle),
+  calcomanias que se veian a traves de otras superficies y piezas que
+  faltaban (panel del ascensor en Silo, hojas en Jungle).
 
 Novedades de la 1.1
 -------------------
