@@ -1,0 +1,28 @@
+{
+  "$schema": "https://recomp.fyi/schema/v1.json",
+  "game": "GoldenEye 007",
+  "wikidata": "Q651610",
+  "system": "N64",
+  "type": "port",
+  "project": "Goldeniris007-psp",
+  "status": "in-progress",
+  "targets": ["PSP"],
+  "approach": "PSP native source port based on the GoldenEye 007 PC port and Ocarina of Time PSP architecture",
+  "maintainers": [
+    {
+      "name": "fjveralv",
+      "link": "https://github.com/fjveralv"
+    }
+  ],
+  "links": [
+    {
+      "label": "Website",
+      "url": "https://fjveralv.github.io/Goldeniris007-psp/"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/fjveralv/Goldeniris007-psp"
+    }
+  ],
+  "notes": "Project currently in active optimization phase. Current performance ranges from 11 to 30 FPS depending on scene complexity."
+}
